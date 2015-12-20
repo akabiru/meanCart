@@ -60,7 +60,7 @@ function setupAuth( User, app ) {
 			scope : ['email']
 		}));
 
-	app.get( 'auth/facebook/callback', 
+	app.get( '/auth/facebook/callback', 
 		passport.authenticate( 'facebook', {
 			failureRedirect : '/fail'
 		}), function( req, res ) {

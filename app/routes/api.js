@@ -60,7 +60,7 @@ module.exports = function( wagner ) {
 			req.user.save(function( error, user ) {
 				if ( error ) {
 					return res.
-						status.( status.INTERNAL_SERVER_ERROR ).
+						status( status.INTERNAL_SERVER_ERROR ).
 						json({
 							error : error.toString()
 						});

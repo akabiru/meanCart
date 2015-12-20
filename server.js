@@ -3,15 +3,15 @@ var express = require('express'),
 		config = require('./config');
 
 // pass wagner to models
-require('./models/models')( wagner );
+require('./app/models/models')( wagner );
 
 var app = express();
 
 // invoke authentication passing app as local
-wagner.invoke(require('./routes/auth'), { app : app });
+wagner.invoke(require('./app/routes/auth'), { app : app });
 
 // register our api
-app.use( '/api/v1', require('./routes/api')( wagner ));
+app.use( '/api/v1', require('./app/routes/api')( wagner ));
 
 // start our server
 app.listen( config.port );
