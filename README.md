@@ -1,0 +1,2 @@
+# meanCart
+Shopping cart application
