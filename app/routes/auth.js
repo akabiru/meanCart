@@ -3,11 +3,11 @@ function setupAuth( User, app ) {
 			FacebookStrategy = require('passport-facebook').Strategy,
 			config = require('../../config');
 
-	// High level serialize/de-serialize config for passport
-	passport.serializeUser(function( User, done ) {
+	// store id in session req.session.passport.user
+	passport.serializeUser(function( user, done ) {
 		done( null, user._id );
 	});
-
+	// user object ataches  to the request as req.user
 	passport.deserializeUser(function( id, done ) {
 		User.
 			findOne({
@@ -20,10 +20,11 @@ function setupAuth( User, app ) {
 	passport.use( new FacebookStrategy({
 		clientID : process.env.FACEBOOK_CLIENT_ID,
 		clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-		callbackURL : 'http://localhost:3000/auth/facebook/callback'
+		callbackURL : 'http://localhost:3000/auth/facebook/callback',
+		profileFields : ['id', 'emails', 'name']
 	},
 	function( accessToken, refreshToken, profile, done ) {
-		if ( !profile.emails || !profile.email.length ) {
+		if ( !profile.emails || !profile.emails.length ) {
 			return done( 'No emails associated with this account.' );
 		}
 

@@ -2,8 +2,9 @@ var express = require('express'),
 		wagner = require('wagner-core'),
 		config = require('./config');
 
-// pass wagner to models
+// pass wagner to models and stripe
 require('./app/models/models')( wagner );
+require('./dependencies')( wagner );
 
 var app = express();
 

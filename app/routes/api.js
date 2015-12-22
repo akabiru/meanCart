@@ -77,9 +77,9 @@ module.exports = function( wagner ) {
 	api.get( '/me', function( req, res ) {
 		if ( !req.user ) {
 			return res.
-				status( status.UNAUTHORISED ).
+				status( status.UNAUTHORIZED ).
 				json({
-					error : error.toString()
+					error : 'Not logged in'
 				});
 		}
 
@@ -90,6 +90,73 @@ module.exports = function( wagner ) {
 		}, handleOne.bind(null, 'user', res));
 
 	});
+
+	// chekout
+	api.get( '/checkout', wagner.invoke(function(User, Stripe) {
+		return function( req, res ) {
+			if ( !req.user ) {
+				return res.
+					status( status.UNAUTHORIZED ).
+					json({
+						error : 'Not logged in.'
+					});
+			}
+
+			// Populate the products in the user's cart
+			req.user.populate({
+				path : 'data.cart.product',
+				model : 'Product'
+			}, 
+			function( error, user ) {
+				// sum up the total products in the user's cart
+				var totalCostUSD = 0;
+
+				_.each( user.data.cart, function( item ) {
+					totalCostUSD += 
+						item.product.internal.apprioximatePriceUSD *
+						item.quantity;
+				});
+
+				// create a charge in Stripe corresponding to the price
+				Stripe.charges.create({
+					// Stripe takes price in cents; *100 and round up
+					amount : Math.ceil( totalCostUSD * 100 ),
+					currency : 'usd',
+					source : req.body.stripeToken,
+					description : 'Example charge'
+				},
+				function( err, charge ) {
+					if ( err && err.type === 'StripeCardError' ) {
+						return res.
+							status( status.BAD_REQUEST ).
+							json({
+								error : err.toString()
+							});
+					}
+
+					if ( err ) {
+						console.log( err );
+						return res.
+							status( status.INTERNAL_SERVER_ERROR ).
+							json({
+								error : err.toString()
+							});
+					}
+
+					req.user.data.cart = [];
+					req.user.save(function() {
+						// ignore any errors - if we failed to empty the user's
+						// cart, that's not necessarily an error
+
+					  // If successful, return the charge id
+					  return res.json({
+					  	id : charge.id
+					  });
+					});
+				});
+			});
+		};
+	}));
 
 	return api;
 };
