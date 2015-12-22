@@ -1,2 +1,6 @@
+# igore node modules
 node_modules
+# ignore npm-debug log
 npm-debug.log
+# ignore config
+config.json

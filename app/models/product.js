@@ -1,8 +1,8 @@
 var mongoose = require('mongoose'),
-		Category = require('./category'),
-		fx = require('./fx');
-
-var productSchema ={
+		Category = require('./category');
+		
+module.exports = function( db, fx ) {
+	var productSchema ={
 	name : {
 		type : String,
 		required : true
@@ -63,6 +63,5 @@ schema.virtual('displayPrice').get(function() {
 schema.set( 'toObject', { virtuals : true });
 schema.set( 'toJSON', { virtuals : true });
 
-// export the schema object
-module.exports = schema;
-module.exports.productSchema = productSchema;
+return db.model( 'Product', schema, 'products' );
+};

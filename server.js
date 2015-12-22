@@ -11,7 +11,7 @@ var app = express();
 // invoke authentication passing app as local
 wagner.invoke(require('./app/routes/auth'), { app : app });
 
-// register our api
+// register our api subrouters
 app.use( '/api/v1', require('./app/routes/api')( wagner ));
 
 // start our server

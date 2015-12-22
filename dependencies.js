@@ -1,13 +1,13 @@
-var Stripe = require('stripe');
+var Stripe = require('stripe'),
+		fx = require('./app/models/fx'),
+		config = require('./config');
 
 module.exports = function( wagner ) {
-	var stripe = Stripe( process.env.STRIPE_API_KEY );
+	var stripe = Stripe( config.stripeKey );
 
 	wagner.factory( 'Stripe', function() {
 		return stripe;
 	});
 
-	return {
-		Stripe : stripe
-	};
+	wagner.factory( 'fx', fx);
 };
