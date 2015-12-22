@@ -1,6 +1,7 @@
 var bodyparser = require('body-parser'),
 		express = require('express'),
-		status = require('http-status');
+		status = require('http-status'),
+		_ = require('underscore');
 
 module.exports = function( wagner ) {
 	var api = express.Router();
@@ -155,6 +156,27 @@ module.exports = function( wagner ) {
 					});
 				});
 			});
+		};
+	}));
+	
+	api.get( '/product/text/:query', wagner.invoke(function( Product ) {
+		return function( req, res ) {
+			Product.
+				find({
+					$text : { 
+						$search : req.params.query 
+					},
+					score : { 
+						$meta : 'textScore' 
+					}
+				}).
+				sort({
+					score : {
+						$meta : 'textScore'
+					}
+				}).
+				limit(10).
+				exec(handleMany.bind( null, 'products', res ));
 		};
 	}));
 

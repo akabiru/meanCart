@@ -11,7 +11,7 @@ describe( 'User API', function() {});
 var PRODUCT_ID = '000000000000000000000001';
 
 describe('User Checkout', function() {
-  this.timeout( 60000 );
+  // this.timeout( 60000 );
   var server, Category, Product, Stripe, User;
 
   before(function() {
@@ -120,6 +120,7 @@ describe('User Checkout', function() {
   });
 
   it( 'can save a users cart', function() {
+    // this.timeout( 60000 );
     var url = URL_ROOT + '/me/cart';
 
     superagent.
@@ -147,6 +148,7 @@ describe('User Checkout', function() {
   });
   
   it( 'can load users cart', function( done ) {
+    // this.timeout( 60000 );
     var url = URL_ROOT + '/me';
 
     User.findOne({}, function( error, user ) {
@@ -176,4 +178,61 @@ describe('User Checkout', function() {
     });
   });
 
+  it( 'can checkout', function( error, user ) {
+    // this.timeout( 60000 );
+    var url = URL_ROOT + '/checkout';
+
+    // set up data
+    User.findOne({}, function( error, user ) {
+      assert.ifError( error );
+      // load cart
+      user.data.cart = [{
+        product : PRODUCT_ID,
+        quantity : 1
+      }];
+      // save the cart
+      user.save(function( error ) {
+        assert.ifError( error );
+        // attempt to checkout by posting to api/v1/checkout
+        superagent.
+          post( url ).
+          send({
+            // Fake stripe credentials
+            // real credit card || encrypted token
+            stripeToken : {
+              number : '4242424242424242',
+              cvc : '123',
+              exp_month : '12',
+              exp_year : '2016'
+            }
+          }).
+          end(function( error, res ) {
+            assert.ifError( error );
+
+            assert.equal( res.status, 200 );
+            var result;
+            assert.doesNotThrow(function() {
+              result = JSON.parse( res.text );
+            });
+
+            // API call gives us back a charge id
+            assert.ok( result.id );
+
+            // make sure stripe got the id
+            Stripe.charges.retrieve( result.id, 
+              function( error, charges ) {
+                assert.ifError( error );
+                assert.ok( charge );
+                assert.equal( charge.amount, 2000 * 100 );
+                done();
+              });
+          });
+      });
+    });
+  });
+
+});
+
+describe( 'Text search API', function() {
+  
 });

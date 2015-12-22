@@ -42,6 +42,11 @@ var productSchema ={
 
 var schema = new mongoose.Schema( productSchema );
 
+// set text index on name for text search
+schema.index({
+	name : 'text'
+});
+
 var currencySymbols = {
 	'USD' : '$',
 	'EUR' : '€',
