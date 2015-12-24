@@ -14,6 +14,11 @@ wagner.invoke(require('./app/routes/auth'), { app : app });
 // register our api subrouters
 app.use( '/api/v1', require('./app/routes/api')( wagner ));
 
+// define static files and use cache max 2 hours
+app.use( express.static( './public', {
+	maxAge : 4 * 60 * 60 * 1000
+}));
+
 // start our server
 app.listen( config.port );
 console.log( 'listening on port ' + config.port );

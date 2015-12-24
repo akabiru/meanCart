@@ -158,7 +158,7 @@ module.exports = function( wagner ) {
 			});
 		};
 	}));
-	
+	// full text search
 	api.get( '/product/text/:query', wagner.invoke(function( Product ) {
 		return function( req, res ) {
 			Product.
