@@ -1,13 +1,16 @@
 var Stripe = require('stripe'),
 		fx = require('./app/models/fx'),
-		config = require('./config');
+		fs = require('fs');
 
-module.exports = function( wagner ) {
-	var stripe = Stripe( config.stripeKey );
+module.exports = function( wagner ) {	
 
-	wagner.factory( 'Stripe', function() {
-		return stripe;
+	wagner.factory( 'Stripe', function( Config ) {
+		return Stripe( Config.stripeKey );
 	});
 
 	wagner.factory( 'fx', fx);
+
+	wagner.factory( 'Config', function() {
+		return JSON.parse( fs.readFileSync('./config.json').toString() );
+	});
 };

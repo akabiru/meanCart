@@ -3,19 +3,28 @@ var controllers = require('./controllers/controllers'),
 		services = require('./services/services'),
     _ = require('underscore');
 
-var app = angular.module('mean-cart', ['ng']);
+var components = angular.module('mean-cart.components', ['ng']);
 
 // inject all controllers to main module
 _.each( controllers, function( controller, name ) {
-	app.controller( name, controller );
+	components.controller( name, controller );
 });
 
 // inject all directives to main module
 _.each( directives, function( directive, name ) {
-	app.directive( name, directive );
+	components.directive( name, directive );
 });
 
 // inject all services
 _.each( services, function( factory, name ) {
-	app.factory( name, factory );
+	components.factory( name, factory );
+});
+
+var app = angular.module('mean-cart', ['mean-cart.components', 'ngRoute']);
+
+app.config(function( $routeProvider ) {
+	$routeProvider.
+		when( '/product/:id', {
+			template : '<product-details></product-details>'
+		});
 });

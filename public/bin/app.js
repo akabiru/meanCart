@@ -1371,6 +1371,15 @@ exports.UserMenuController = function( $scope, $user ) {
 	$scope.user = $user;
 };
 
+exports.ProductDetailsController = function( $scope, $routeParams, $http ) {
+	var encoded = encodeURIComponent( $routeParams.id );
+
+	$http.
+		get( '/api/v1/product/id/' + encoded).
+		success(function( data ) {
+			$scope.product = data.product;
+		});
+};
 },{}],4:[function(require,module,exports){
 exports.userMenu = function() {
 	return {
@@ -1378,27 +1387,43 @@ exports.userMenu = function() {
 		templateUrl : '/app/views/user_menu.html'
 	};	
 };
+
+exports.productDetails = function() {
+	return {
+		controller : 'ProductDetailsController',
+		templateUrl : '/app/views/product_details.html'
+	};
+};
 },{}],5:[function(require,module,exports){
 var controllers = require('./controllers/controllers'),
 		directives = require('./directives/directives'),
 		services = require('./services/services'),
     _ = require('underscore');
 
-var app = angular.module('mean-cart', ['ng']);
+var components = angular.module('mean-cart.components', ['ng']);
 
 // inject all controllers to main module
 _.each( controllers, function( controller, name ) {
-	app.controller( name, controller );
+	components.controller( name, controller );
 });
 
 // inject all directives to main module
 _.each( directives, function( directive, name ) {
-	app.directive( name, directive );
+	components.directive( name, directive );
 });
 
 // inject all services
 _.each( services, function( factory, name ) {
-	app.factory( name, factory );
+	components.factory( name, factory );
+});
+
+var app = angular.module('mean-cart', ['mean-cart.components', 'ngRoute']);
+
+app.config(function( $routeProvider ) {
+	$routeProvider.
+		when( '/product/:id', {
+			template : '<product-details></product-details>'
+		});
 });
 
 },{"./controllers/controllers":3,"./directives/directives":4,"./services/services":6,"underscore":2}],6:[function(require,module,exports){

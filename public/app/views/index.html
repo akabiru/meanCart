@@ -4,6 +4,10 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
 		<!-- load angular -->
 		<script type="text/javascript"  src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js"></script>
+		<!-- load angular-route -->
+		<script type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-route.js">
+    </script>
 		<!-- compiled client side js -->
 		<script type="text/javascript" src="/bin/app.js"></script>
 		<!-- custom css -->
@@ -11,6 +15,6 @@
 	</head>
 	<body>
 		<user-menu></user-menu>
-		<div ng-view></div>
+		<div class="content-wrapper" ng-view></div>
 	</body>
 </html>
