@@ -9,6 +9,61 @@ module.exports = function( wagner ) {
 	// use body parser so that we can grab data from POST req
 	api.use(bodyparser.json());
 
+	/* CATEGORY API */
+	api.get( '/category/id/:id', wagner.invoke(function( Category ) {
+		return function( req, res ) {
+			Category.findOne({
+				_id : req.params.id
+			}, function( error, category ) {
+				if ( error ) {
+					return res.
+						status( status.INTERNAL_SERVER_ERROR ).
+						json({
+							error : error.toString()
+						});
+				}
+
+				if ( !category ) {
+					return res.
+						status( status.NOT_FOUND ).
+						json({
+							error : 'Not found'
+						});
+				}
+				// success
+				res.json({
+					category : category
+				});
+			});
+		};
+	}));
+
+	api.get( '/category/parent/:id', wagner.invoke(function( Category ) {
+		return function( req, res ) {
+			Category.
+				find({
+					parent : req.params.id
+				}).
+				sort({
+					_id : 1
+				}).
+				exec(function( error, categories ) {
+					if ( error ) {
+						return res.
+							status( status.INTERNAL_SERVER_ERROR ).
+							json({
+								error : error.toString()
+							});
+					}
+					// success
+					res.json({
+						categories : categories
+					});
+				});
+		};
+	}));
+
+	/* PRODUCT API */
 	// get a product by id
 	api.get( '/product/id/:id', wagner.invoke(function( Product ) {
 		return function( req, res ) {
@@ -43,6 +98,7 @@ module.exports = function( wagner ) {
 		};
 	}));
 
+	/* USER API */
 	// modify cart
 	api.put( '/me/cart', wagner.invoke(function( User ) {
 		return function( req, res ) {
@@ -92,6 +148,7 @@ module.exports = function( wagner ) {
 
 	});
 
+	/* STRIPE CHECKOUT API */
 	// chekout
 	api.get( '/checkout', wagner.invoke(function(User, Stripe) {
 		return function( req, res ) {
@@ -158,6 +215,8 @@ module.exports = function( wagner ) {
 			});
 		};
 	}));
+
+	/* TEXT SEARCH API */
 	// full text search
 	api.get( '/product/text/:query', wagner.invoke(function( Product ) {
 		return function( req, res ) {
