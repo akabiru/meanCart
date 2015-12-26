@@ -24,6 +24,12 @@ var app = angular.module('mean-cart', ['mean-cart.components', 'ngRoute']);
 
 app.config(function( $routeProvider ) {
 	$routeProvider.
+		when( '/category/:category', {
+			templateUrl : '/app/views/category_view.html'
+		}).
+		when( '/checkout', {
+			template : '<checkout></checkout>'
+		}).
 		when( '/product/:id', {
 			template : '<product-details></product-details>'
 		});

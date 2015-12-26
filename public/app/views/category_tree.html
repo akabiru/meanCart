@@ -1,0 +1,29 @@
+<div class="category-tree-wrapper" ng-show="category">
+	<div class="crumbs">
+		<div class="crumb" ng-repeat="ancestor in category.ancestors">
+			<a ng-href="#/category/{{ ancestor }}">
+				{{ ancestor }}
+			</a>
+			<div class="divider">
+				/
+			</div><!-- divider -->
+		</div><!-- crumb -->
+		<div class="child-categories" ng-show="children && children.length">
+			<div class="divider">
+				/
+			</div><!-- divider -->
+			<div class="child-row"
+						ng-init="display = false;"
+						ng-click="display = !display;">
+				<i class="fa fa-chevron-down"></i>
+			</div><!-- child-row -->
+			<div class="child-select" ng-show="display">
+				<div ng-repeat="child in children">
+					<a ng-href="#/category/{{child._id}}">
+						{{ child._id }}
+					</a>
+				</div>
+			</div>
+		</div><!-- child-categories -->
+	</div><!-- crumbs -->
+</div><!-- category-tree-wrapper -->
