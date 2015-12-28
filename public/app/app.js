@@ -24,7 +24,7 @@ var app = angular.module('mean-cart', ['mean-cart.components', 'ngRoute']);
 
 app.config(function( $routeProvider ) {
 	$routeProvider.
-		when( '/'. {
+		when( '/', {
 			templateUrl : '<search-bar></search-bar>'
 		}).
 		when( '/category/:category', {
