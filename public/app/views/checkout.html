@@ -1,0 +1,42 @@
+<div class="checkout-wrapper">
+	<div class="checkout-product" ng-repeat="item in user.user.data.cart">
+		<div class="image-left">
+			<img ng-src="{{ item.product.pictures[0] }}" >
+		</div><!-- image left -->
+		<div class="product-details">
+			<div class="name">
+				{{ item.product.name }}
+			</div><!-- name -->
+			<div class="price">
+				{{ item.product.displayPrice }}
+			</div><!-- price -->
+			<div class="quantity">
+				Quantity:
+				<input type="number" ng-model="item.quantity" />
+			</div><!-- quantity -->
+		</div><!-- product-details -->
+		<div style="clear: both"></div>
+	</div><!-- checkout-product -->
+	<div class="update-cart-button" ng-click="updateCart()">
+		Update Cart
+	</div><!-- update-cart-button -->
+	<div class="checkout">
+		<h1>
+			<i class="fa fa-credit-card"></i>
+			Payment
+		</h1>
+		<div class="credit-card-input">
+			Credit Card Number:
+			<input type="text" ng-model="stripeToken.number" />
+		</div><!-- credit-card-input -->
+		<div class="checkout-button" ng-click="checkout()">
+			Check Out
+		</div><!-- checkout-button -->
+		<div class="checkout-error" ng-show="error">
+			{{ error }}
+		</div><!-- checkout-error -->
+		<div class="checkout-success">
+			Checked out successfully!
+		</div><!-- checkout-success -->
+	</div><!-- checkout -->
+</div><!-- checkout-wrapper -->

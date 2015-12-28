@@ -25,3 +25,24 @@ exports.categoryProducts = function() {
 		templateUrl : '/app/views/category_products.html'
 	};
 };
+
+exports.addToCart = function() {
+	return {
+		controller : 'AddToCartController',
+		templateUrl : '/app/views/add_to_cart.html'
+	};
+};
+
+exports.checkout = function() {
+	return {
+		controller : 'CheckoutController',
+		templateUrl : '/app/views/checkout.html'
+	};
+};
+
+exports.searchBar = function() {
+	return {
+		controller : 'SearchBarController',
+		templateUrl : '/app/views/search_bar.html'
+	};
+};

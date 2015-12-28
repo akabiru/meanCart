@@ -1427,6 +1427,27 @@ exports.CategoryTreeController = function( $scope, $routeParams, $http ) {
 				});
 		});
 };
+
+exports.AddToCartController = function( $scope, $http, $user, $timeout ) {
+	$scope.addToCart = function( product ) {
+		var obj = {
+			product : product._id,
+			quantity : 1
+		};
+		$user.user.data.cart.push( obj );
+
+		$http.
+			put( '/api/v1/me/cart', $user.user).
+			success(function( data ) {
+				$user.loadUser();
+				$scope.success = true;
+
+				$timeout(function() {
+					$scope.success = false
+				}, 5000);
+			});
+	};
+};
 },{}],4:[function(require,module,exports){
 exports.navBar = function() {
 	return {
@@ -1453,6 +1474,13 @@ exports.categoryProducts = function() {
 	return {
 		controller : 'CategoryProductsController',
 		templateUrl : '/app/views/category_products.html'
+	};
+};
+
+exports.addToCart = function() {
+	return {
+		controller : 'AddToCartController',
+		templateUrl : '/app/views/add_to_cart.html'
 	};
 };
 },{}],5:[function(require,module,exports){
@@ -1482,6 +1510,12 @@ var app = angular.module('mean-cart', ['mean-cart.components', 'ngRoute']);
 
 app.config(function( $routeProvider ) {
 	$routeProvider.
+		when( '/category/:category', {
+			templateUrl : '/app/views/category_view.html'
+		}).
+		when( '/checkout', {
+			template : '<checkout></checkout>'
+		}).
 		when( '/product/:id', {
 			template : '<product-details></product-details>'
 		});

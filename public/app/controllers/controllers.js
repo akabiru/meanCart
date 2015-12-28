@@ -59,3 +59,71 @@ exports.CategoryTreeController = function( $scope, $routeParams, $http ) {
 				});
 		});
 };
+
+exports.AddToCartController = function( $scope, $http, $user, $timeout ) {
+	$scope.addToCart = function( product ) {
+		var obj = {
+			product : product._id,
+			quantity : 1
+		};
+		$user.user.data.cart.push( obj );
+
+		$http.
+			put( '/api/v1/me/cart', $user.user).
+			success(function( data ) {
+				$user.loadUser();
+				$scope.success = true;
+
+				$timeout(function() {
+					$scope.success = false
+				}, 5000);
+			});
+	};
+};
+
+exports.CheckoutController = function( $scope, $user, $http ) {
+	// For update cart
+	$scope.user = $user;
+
+	$scope.updateCart = function() {
+		$http.
+			put( '/api/v1/me/cart', $user.user).
+			success(function( data ) {
+				$scope.updated = true;
+			});
+	};
+
+	// For checkout
+	Stripe.setPublishedKey('pk_test_KVC0AphhVxm52zdsM4WoBstU');
+
+	$scope.stripeToken = {
+		number: '4242424242424242',
+    cvc: '123',
+    exp_month: '12',
+    exp_year: '2016'
+	};
+
+	$scope.checkout = function() {
+		$scope.error = null;
+		Stripe.card.createToken( $scope.stripeToken, 
+			function( status, response ) {
+				if ( status.error ) {
+					$scope.error =  status.error;
+					return;
+				}
+
+				$http.
+					post( '/api/v1/checkout', {
+						stripeToken : response.id
+					}).
+					success(function( data ) {
+						$scope.checkedOut = true;
+						$user.user.data.cart = [];
+					});
+			});
+	};
+};
+
+exports.SearchBarController = function( $scope, $http ) {
+
+};
