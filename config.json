@@ -1,10 +1,5 @@
 {
-	"port" : "3000",
-	"database" : "mongodb://mean_cart_api:mongo10id@ds033915.mongolab.com:33915/mean_cart_db",
+	"port" : "3000",	
 	"databaseLocal" : "mongodb://localhost:27017/test_database",
-	"secret" : "allegromanontroppo",
-	"facebookClientId" : "1545190359137490",
-	"facebookClientSecret" : "f6a534d79f927499be06b0e485fefbfd",
-	"stripeKey" : "sk_test_5WeCri3ws6hfPC2d2VfaZsNw",
-	"openExchangeRatesKey": "6eb17175aa264968884e94f271f89cb0"
+	"secret" : "allegromanontroppo"	
 }
