@@ -125,5 +125,14 @@ exports.CheckoutController = function( $scope, $user, $http ) {
 };
 
 exports.SearchBarController = function( $scope, $http ) {
+	$scope.searchText = '';
+	
+  $scope.update = function() {   
 
+    $http.
+      get( '/api/v1/product/text/' + $scope.searchText).
+      success(function (data ) {
+        $scope.results = data.products;
+      });
+  };
 };

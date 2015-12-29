@@ -23,10 +23,7 @@ _.each( services, function( factory, name ) {
 var app = angular.module('mean-cart', ['mean-cart.components', 'ngRoute']);
 
 app.config(function( $routeProvider ) {
-	$routeProvider.
-		when( '/', {
-			templateUrl : '<search-bar></search-bar>'
-		}).
+	$routeProvider.		
 		when( '/category/:category', {
 			templateUrl : '/app/views/category_view.html'
 		}).
@@ -35,5 +32,8 @@ app.config(function( $routeProvider ) {
 		}).
 		when( '/product/:id', {
 			template : '<product-details></product-details>'
-		});
+		}).
+		when('/', {
+      template: '<search-bar></search-bar>'
+    });
 });

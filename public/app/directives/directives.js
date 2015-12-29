@@ -41,8 +41,8 @@ exports.checkout = function() {
 };
 
 exports.searchBar = function() {
-	return {
-		controller : 'SearchBarController',
-		templateUrl : '/app/views/search_bar.html'
-	};
+  return {
+    controller: 'SearchBarController',
+    templateUrl: '/app/views/search_bar.html'
+  };
 };

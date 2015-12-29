@@ -1493,7 +1493,16 @@ exports.CheckoutController = function( $scope, $user, $http ) {
 };
 
 exports.SearchBarController = function( $scope, $http ) {
+	$scope.searchText = '';
+	
+  $scope.update = function() {   
 
+    $http.
+      get( '/api/v1/product/text/' + $scope.searchText).
+      success(function (data ) {
+        $scope.results = data.products;
+      });
+  };
 };
 },{}],4:[function(require,module,exports){
 exports.navBar = function() {
@@ -1539,10 +1548,10 @@ exports.checkout = function() {
 };
 
 exports.searchBar = function() {
-	return {
-		controller : 'SearchBarController',
-		templateUrl : '/app/views/search_bar.html'
-	};
+  return {
+    controller: 'SearchBarController',
+    templateUrl: '/app/views/search_bar.html'
+  };
 };
 
 },{}],5:[function(require,module,exports){
@@ -1571,10 +1580,7 @@ _.each( services, function( factory, name ) {
 var app = angular.module('mean-cart', ['mean-cart.components', 'ngRoute']);
 
 app.config(function( $routeProvider ) {
-	$routeProvider.
-		when( '/', {
-			templateUrl : '<search-bar></search-bar>'
-		}).
+	$routeProvider.		
 		when( '/category/:category', {
 			templateUrl : '/app/views/category_view.html'
 		}).
@@ -1583,7 +1589,10 @@ app.config(function( $routeProvider ) {
 		}).
 		when( '/product/:id', {
 			template : '<product-details></product-details>'
-		});
+		}).
+		when('/', {
+      template: '<search-bar></search-bar>'
+    });
 });
 
 },{"./controllers/controllers":3,"./directives/directives":4,"./services/services":6,"underscore":2}],6:[function(require,module,exports){
