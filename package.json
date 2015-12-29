@@ -10,11 +10,11 @@
     "passport-facebook": "2.0.0",
     "stripe": "^4.1.0",
     "underscore": "1.5.2",
+    "superagent": "1.2.0",
     "wagner-core": "0.1.0"
   },
   "devDependencies": {
-    "mocha": "2.2.4",
-    "superagent": "1.2.0",
+    "mocha": "2.2.4",    
     "browserify": "10.2.3",
     "gulp": "3.8.11",
     "gulp-browserify": "0.5.1",
