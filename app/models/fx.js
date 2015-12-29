@@ -1,9 +1,10 @@
 var superagent = require('superagent'),
-		_ = require('underscore');    
+		_ = require('underscore'),
+    config = require('../../config');
 
 module.exports = function() {
 	var url = 'http://openexchangerates.org/api/latest.json?app_id' +
-		process.env.OPEN_EXCHANGE_RATES_KEY;
+		config.OpenExchangeRatesKey;
 	var rates = {
     USD: 1,
     EUR: 1.1,
