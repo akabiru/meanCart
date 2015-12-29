@@ -5,7 +5,7 @@ var Stripe = require('stripe'),
 module.exports = function( wagner ) {	
 
 	wagner.factory( 'Stripe', function( Config ) {
-		return Stripe( Config.stripeKey );
+		return Stripe( process.env.STRIPE_KEY || Config.stripeKey );
 	});
 
 	wagner.factory( 'fx', fx);
