@@ -1,6 +1,12 @@
 <div class="search-bar-wrapper">
-	<input type="text" class="search-bar-input" ng-model="searchText" ng-change="update()" />
-	<div class="autocomplete-result" ng-repeat="result in results">
-		{{ result.name }}
+	<div class="mean-search">
+		Mean Search	
+	</div>
+	<input type="text" class="search-bar-input" ng-model="searchText" ng-change="update()" 
+	placeholder="Search for items here"/>
+	<div class="autocomplete-result" ng-repeat="result in results">		
+		<a ng-href="#/product/{{ result._id }}">
+			{{ result.name }}
+		</a>
 	</div>
 </div>

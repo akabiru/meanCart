@@ -4,7 +4,7 @@
 		<span ng-show="price === -1">
 			<i class="fa fa-arrow-up"></i>
 		</span>
-		<span ng-show="price === 1">
+		<span ng-show="price === 1 || price === undefined">
 			<i class="fa fa-arrow-down"></i>
 		</span>
 	</div>	<!-- sort arrow -->
@@ -21,9 +21,9 @@
 		<div class="product-cost">
 			{{ product.displayPrice }}
 		</div><!-- product-cost -->
-		<div class="cart-button" ng-click="addToCart(product);">
-			<i class="fa fa-cart-plus"></i>
-		</div><!-- cart-button -->
+		<add-to-cart></add-to-cart>
 	</div><!-- product -->
 	<div style="clear: both"></div>
 </div><!-- product wrapper -->
+
+

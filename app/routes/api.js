@@ -150,7 +150,7 @@ module.exports = function( wagner ) {
 
 	/* STRIPE CHECKOUT API */
 	// chekout
-	api.get( '/checkout', wagner.invoke(function(User, Stripe) {
+	api.post( '/checkout', wagner.invoke(function(User, Stripe) {
 		return function( req, res ) {
 			if ( !req.user ) {
 				return res.
