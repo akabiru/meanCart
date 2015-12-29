@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 		config = require('../../config');
 
 module.exports = function( wagner ) {
-	mongoose.connect( config.databaseLocal );
+	mongoose.connect( config.database );
 
 	// register mongoose as a service
 	wagner.factory( 'db', function() {
