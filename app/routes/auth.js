@@ -17,8 +17,8 @@ function setupAuth( User, Config, app ) {
 
 	// Facebook-specific
 	passport.use( new FacebookStrategy({
-		clientID : Config.facebookClientId,
-		clientSecret : Config.facebookClientSecret,
+		clientID : process.env.FACEBOOK_CLIENT_ID || Config.facebookClientId,
+		clientSecret : process.env.FACEBOOK_CLIENT_SECRET || Config.facebookClientSecret,
 		callbackURL : 'http://localhost:3000/auth/facebook/callback',
 		profileFields : ['id', 'emails', 'name']
 	},
