@@ -62,13 +62,13 @@ function setupAuth( User, Config, app ) {
       passport.authenticate('facebook',
         {
           scope: ['email'],
-          callbackURL: 'http://localhost:3000/auth/facebook/callback?redirect=' + redirect
+          callbackURL: 'http://meancart.herokuapp.com/auth/facebook/callback?redirect=' + redirect
         })(req, res, next);
     });
 
 	app.get('/auth/facebook/callback',
     function(req, res, next) {
-      var url = 'http://localhost:3000/auth/facebook/callback?redirect=' +
+      var url = 'http://meancart.herokuapp.com/auth/facebook/callback?redirect=' +
         encodeURIComponent(req.query.redirect);
       passport.authenticate('facebook', { callbackURL: url })(req, res, next);
     },
