@@ -2,3 +2,4 @@
 node_modules
 # ignore npm-debug log
 npm-debug.log
+heroku_logs.md

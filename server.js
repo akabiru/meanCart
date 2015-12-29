@@ -20,5 +20,5 @@ app.use( express.static( './public', {
 }));
 
 // start our server
-app.listen( config.port );
+app.listen( process.env.PORT || config.port );
 console.log( 'listening on port ' + config.port );
