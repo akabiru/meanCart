@@ -15,7 +15,7 @@ wagner.invoke(require('./app/routes/auth'), { app : app });
 app.use( '/api/v1', require('./app/routes/api')( wagner ));
 
 // define static files and use cache max 2 hours
-app.use( express.static( './public', {
+app.use( express.static( __dirname + '/public', {
 	maxAge : 4 * 60 * 60 * 1000
 }));
 
