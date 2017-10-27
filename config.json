@@ -1,5 +1,5 @@
 {
 	"port" : "3000",	
 	"databaseLocal" : "mongodb://localhost:27017/test_database",
-	"secret" : "allegromanontroppo"	
+	"secret" : "foobar"	
 }
